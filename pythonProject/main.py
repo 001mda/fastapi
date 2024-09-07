@@ -3,6 +3,7 @@ from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel
 from fastapi import requests
+from typing import List
 
 
 app = FastAPI()
@@ -122,4 +123,43 @@ def get_cart_items():
 def clear_cart():
     cart.clear()
     return {"message": "Корзина очищена"}
+
+class NewsItem(BaseModel):
+    id: int
+    title: str
+    description: str
+    image_url: str
+
+
+news = [
+    {
+        "id": 1,
+        "title": "Новая модель iPhone 15 Pro",
+        "description": "Apple представила новую модель iPhone 15 Pro c улучшенными характеристиками.",
+        "image_url": "https://example.com/images/iphone15.jpg"
+
+    },
+
+    {
+        "id": 2,
+        "title": "Xiaomi выпустила Redmi Note 12",
+        "description": "Xiaomi анонсировала новый бюджетный смартфон Redmi Note 12.",
+        "image_url": "https://example.com/images/redmi_note12.jpg"
+
+    },
+
+    {
+        "id": 3,
+        "title": "Samsung Galaxy Z Flip 5 уже в продаже",
+        "description": "Новый складной смартфон от Samsung доступен для покупки.",
+        "image_url": "https://example.com/images/galaxy_z_flip5.jpg"
+
+    }
+]
+
+@app.get("/news", response_model=List[NewsItem])
+def get_news():
+    if not news:
+        return {"message": "Новостей нет"}
+    return news
 

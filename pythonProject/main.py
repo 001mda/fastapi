@@ -125,7 +125,6 @@ def clear_cart():
     return {"message": "Корзина очищена"}
 
 class NewsItem(BaseModel):
-    id: int
     title: str
     description: str
     image_url: str
@@ -133,7 +132,7 @@ class NewsItem(BaseModel):
 
 news = [
     {
-        "id": 1,
+      
         "title": "Новая модель iPhone 15 Pro",
         "description": "Apple представила новую модель iPhone 15 Pro c улучшенными характеристиками.",
         "image_url": "https://example.com/images/iphone15.jpg"
@@ -141,7 +140,7 @@ news = [
     },
 
     {
-        "id": 2,
+        
         "title": "Xiaomi выпустила Redmi Note 12",
         "description": "Xiaomi анонсировала новый бюджетный смартфон Redmi Note 12.",
         "image_url": "https://example.com/images/redmi_note12.jpg"
@@ -149,7 +148,7 @@ news = [
     },
 
     {
-        "id": 3,
+    
         "title": "Samsung Galaxy Z Flip 5 уже в продаже",
         "description": "Новый складной смартфон от Samsung доступен для покупки.",
         "image_url": "https://example.com/images/galaxy_z_flip5.jpg"

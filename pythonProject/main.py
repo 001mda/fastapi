@@ -95,7 +95,8 @@ class CartItem(BaseModel):
     customer_id: int       
     product_id: int        
     quantity: int          
-    date_added: Optional[datetime] = None  
+    date_added: Optional[datetime] = None 
+    
 
 
 @app.post("/cart/")
@@ -125,36 +126,58 @@ def clear_cart():
     return {"message": "Корзина очищена"}
 
 class NewsItem(BaseModel):
+    id: int
     title: str
     description: str
-    image_url: str
+    images: List[str]
+    category: str
 
 
 news = [
     {
-      
-        "title": "Новая модель iPhone 15 Pro",
-        "description": "Apple представила новую модель iPhone 15 Pro c улучшенными характеристиками.",
-        "image_url": "https://example.com/images/iphone15.jpg"
-
+        "id": 1,
+        "title": "Новая модель iPhone",
+        "description": "Apple представила новую модель iPhone c улучшенной камерой и батареей.",
+        "images": [
+            "https://example.com/images/iphone1.jpg",
+            "https://example.com/images/iphone2.jpg",
+            "https://example.com/images/iphone3.jpg",
+            "https://example.com/images/iphone4.jpg",
+            "https://example.com/images/iphone5.jpg",
+            "https://example.com/images/iphone6.jpg"
+        ],
+        "category": "Technology"
     },
-
     {
-        
-        "title": "Xiaomi выпустила Redmi Note 12",
-        "description": "Xiaomi анонсировала новый бюджетный смартфон Redmi Note 12.",
-        "image_url": "https://example.com/images/redmi_note12.jpg"
-
+        "id": 2,
+        "title": "Samsung Galaxy Fold",
+        "description": "Samsung анонсировал новый складной телефон c гибким экраном.",
+        "images": [
+            "https://example.com/images/galaxy_fold1.jpg",
+            "https://example.com/images/galaxy_fold2.jpg",
+            "https://example.com/images/galaxy_fold3.jpg",
+            "https://example.com/images/galaxy_fold4.jpg",
+            "https://example.com/images/galaxy_fold5.jpg",
+            "https://example.com/images/galaxy_fold6.jpg"
+        ],
+        "category": "Technology"
     },
-
     {
-    
-        "title": "Samsung Galaxy Z Flip 5 уже в продаже",
-        "description": "Новый складной смартфон от Samsung доступен для покупки.",
-        "image_url": "https://example.com/images/galaxy_z_flip5.jpg"
-
+        "id": 3,
+        "title": "Политические события",
+        "description": "Последние новости o международных политических событиях.",
+        "images": [
+            "https://example.com/images/politics1.jpg",
+            "https://example.com/images/politics2.jpg",
+            "https://example.com/images/politics3.jpg",
+            "https://example.com/images/politics4.jpg",
+            "https://example.com/images/politics5.jpg",
+            "https://example.com/images/politics6.jpg"
+        ],
+        "category": "Politics"
     }
 ]
+
 
 @app.get("/news", response_model=List[NewsItem])
 def get_news():
@@ -162,3 +185,7 @@ def get_news():
         return {"message": "Новостей нет"}
     return news
 
+@app.get("/news/category/{category}", response_model=List[NewsItem])
+def get_news_by_category(category: str):
+    filtered_news = [item for item in news if item["category"].lower() == category.lower()]
+    return filtered_news
